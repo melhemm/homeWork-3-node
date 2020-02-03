@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+
+<!-- 
+1*. Задание на HTML, CSS, JS (Ajax) и NodeJS: Разработать сервер, 
+который умеет отдавать запрашиваемые html страницы. Дана страница 
+index.html. В ней есть блок #container и кнопка вне этого блока. Сделайте 
+так, чтобы по нажатию на кнопку в #container ajax-ом подгружалось 
+содержимое страницы ajax.html.
+ -->
+
+
+<body>
+    <button id="button">Get Ajax HTML</button>
+    <div id="container"></div>
+
+    <script>
+        // Create event listener
+        document.getElementById('button').addEventListener('click', loadText);
+
+        function loadText() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'ajax.html', true);
+            xhr.onload = function () {
+                // console.log('READYSTATE: ', xhr.readyState);
+                    document.getElementById('container').innerHTML = this.responseText;
+            }
+            xhr.send();
+        }
+    </script>
+
+
+</body>
+
+</html>
