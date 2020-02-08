@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Products</h1>
+    <button id="load">Load More</button>
+    <div id="container">
+        <ul id="productsList"></ul>
+    </div>
+
+    <script>
+        //  Get Products
+        var products;
+        var batchSize = 4;
+        var clickCount = 0;
+        initProducts()
+
+        function initProducts() {
+            var serverAPI = new XMLHttpRequest();
+            serverAPI.open("GET", "products.json");
+            serverAPI.onload = function () {
+                products = JSON.parse(serverAPI.responseText);
+                showProducts();
+            }
+            serverAPI.send();
+        }
+
+        function showProducts() {
+            var productsList = products.slice(clickCount * batchSize, (clickCount + 1) * batchSize)
+            productsList.forEach(product => {
+                let UiProductList = document.getElementById('productsList');
+                let UiProduct = document.createElement('li');
+                UiProduct.appendChild(document.createTextNode(product));
+                UiProductList.appendChild(UiProduct)
+                UiProduct.innerHTML = product.title + " " + product.price + "$"
+            });
+        }
+
+        document.getElementById('load').addEventListener('click', function () {
+            clickCount += 1
+            showProducts();
+        })
+    </script>
+
+</body>
+
+</html>
