@@ -17,7 +17,37 @@
 </head>
 
 <body>
+    <h1>Users</h1>
+    <button id="button">Get Users</button>
+    <div id="container">
+        <ul id="usersList"></ul>
+    </div>
+    <script>
+        let container = document.getElementById('container');
+        document.getElementById('button').addEventListener('click', function() { 
+            let req = new XMLHttpRequest();
+            req.open('GET', 'users.json');
+            req.onload = function() { 
+                let jsonData = JSON.parse(req.responseText);
+                renderHtml(jsonData);
+            }
 
+            function renderHtml(data) { 
+                for(i = 0; i < data.length; i++) {
+                    let users = data[i];
+                    let ul = document.getElementById('usersList');
+                    let li = document.createElement('li');
+                    li.appendChild(document.createTextNode(users));
+                    ul.appendChild(li);
+                }
+            }
+            req.send();
+        });
+
+
+    </script>
 </body>
 
 </html>
+
+
